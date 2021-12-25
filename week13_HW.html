@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>week12 HW</title>
+	<style type="text/css">
+	.button { background-color: lightskyblue; 
+			  font-weight: bold;
+			  width: 80px; 
+			  text-align: center;}
+	.button:hover { background-color: deepskyblue; }
+	.alignleft { text-align: left; }
+	h1 { color: navy;
+		 text-decoration: underline; }
+	em { font-style: italic;
+	     font-size: large; }
+	span { color: red; }
+	.bg { background-color: lightyellow;
+		  width: 450px;
+		  margin: 0 auto;
+		  text-align: center;}
+	.resultpanel { font-family: tahoma, arial, sans-serif;
+				   font-size: medium;
+				   border: 1px groove dimgray;
+				   width: 450px;
+				   text-decoration: underline;
+				 }
+	.res { font-family: tahoma, arial, sans-serif;
+		   font-size: medium;
+		   text-decoration: underline; }
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<div class="alignleft">
+			<h1>Guessing Game</h1>
+			<form>
+				<label><em>Your Guess(<span>1~100</span>)</em></label><br>
+				<input type="text" id="num" name="number"><br><br>
+			</form>
+			<button class="button" onclick="start()">play</button><br><br>
+			<table id="table">
+				<tr>
+					<td class="res">Result</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var ran = Math.floor((Math.random()*100)+1);
+		var numList = [1, 100] ;
+		var bigList = [];
+		var smallList = [];
+		function start() {
+			var numStr = document.getElementById("num").value;
+			var num = parseInt(numStr);
+			if(num == ran) { 
+				alert('Bingo!!')
+			} else {
+				if(numList[2] == null) {
+					if(num > ran) {
+						var t = document.getElementById("table");
+						var tr = document.createElement("tr");
+						var td = document.createElement("td");
+		  				var result = document.createTextNode("1~" + num);
+		  				td.appendChild(result);
+		  				tr.appendChild(td);
+		  				t.appendChild(tr);
+		  				t.setAttribute("class", "resultpanel");
+		  				numList.push(num);
+					} else {
+						var t = document.getElementById("table");
+						var tr = document.createElement("tr");
+						var td = document.createElement("td");
+		  				var result = document.createTextNode(num + "~100");
+		  				td.appendChild(result);
+		  				tr.appendChild(td);
+		  				t.appendChild(tr);
+		  				t.setAttribute("class", "resultpanel");
+		  				numList.push(num);
+					}
+				} else {
+					numList.push(num);
+					for(let i = 0; i < numList.length; i++) {
+						if(numList[i] > ran) {
+							bigList.push(numList[i]);
+						} else {
+							smallList.push(numList[i]);
+						}
+					}
+					var bigmin = bigList[0] ;
+					var smamax = smallList[0];
+					for(let i = 0; i < bigList.length; i++) {
+						if(bigList[i] < bigmin) {
+							bigmin = bigList[i];
+						}
+					}
+					for(let i = 0; i < smallList.length; i++) {
+						if(smallList[i] > smamax) {
+							smamax = smallList[i];
+						}
+					}
+					var t = document.getElementById("table");
+					var tr = document.createElement("tr");
+					var td = document.createElement("td");
+	  				var result = document.createTextNode(smamax + "~" + bigmin);
+	  				td.appendChild(result);
+	  				tr.appendChild(td);
+	  				t.appendChild(tr);
+	  				t.setAttribute("class", "resultpanel");
+				}
+			
+			}
+		}
+
+	</script>
+</body>
+</html>
